@@ -50,7 +50,7 @@
         if (response.ok) {
             if (data.success) {
                 alert('Verification successful!');
-                // Redirect or perform other actions
+                window.location.href = 'login.html';
             } else {
                 document.getElementById('verificationErrorMessage').innerText = data.message || 'Verification failed.';
             }
