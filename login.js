@@ -18,8 +18,12 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             // Store the JWT token in localStorage for future authenticated requests
             localStorage.setItem('jwtToken', data.token);
 
-            // Redirect to dashboard on success
+            // Redirect based on role
+        if (data.role === 'ADMIN') {
+            window.location.href = 'admin.html';
+        } else {
             window.location.href = 'dashboard.html';
+        }
         } else {
             // Display error message
             document.getElementById('errorMessage').innerText = data.message;

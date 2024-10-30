@@ -1,6 +1,6 @@
 // Function to fetch access keys from the server
 async function fetchAccessKeys() {
-    const apiUrl = 'http://localhost:8080/api/accesskeys'; // Your backend endpoint for fetching access keys
+    const apiUrl = 'http://localhost:8080/admin'; // Your backend endpoint for fetching access keys
     const token = localStorage.getItem('jwtToken'); // Retrieve the JWT token from localStorage
 
     try {
@@ -36,7 +36,7 @@ async function fetchAccessKeys() {
 // Function to revoke an access key by ID
 async function revokeAccessKey(accessKeyId) {
     console.log('Revoking access key with ID:', accessKeyId);
-    const apiUrl = `http://localhost:8080/api/accesskeys/revoke/${accessKeyId}`; // Your backend endpoint for revoking access keys
+    const apiUrl = `http://localhost:8080/admin/accesskeys/revoke/${accessKeyId}`; // Your backend endpoint for revoking access keys
     const token = localStorage.getItem('jwtToken'); // Retrieve the JWT token from localStorage
 
     try {

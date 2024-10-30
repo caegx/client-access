@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Code</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 p-4 text-white flex justify-between items-center shadow-lg">
+        <div>
+            <h1 class="text-3xl font-bold">Access Key Manager</h1>
+        </div>
+        <div>
+            <a href="login.html" class="text-white hover:underline">Login</a>
+        </div>
+    </nav>
+
+    <!-- Verification Code Form -->
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-6 rounded shadow-md w-80">
+            <h2 class="text-xl font-bold mb-4">Enter Verification Code</h2>
+            <form id="verificationForm">
+                <input type="text" id="verificationCode" placeholder="Verification Code" class="w-full p-2 mb-4 border rounded" required>
+                <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Verify Code</button>
+            </form>
+            <p id="verificationErrorMessage" class="text-red-500 text-center mt-2"></p> <!-- Error message display -->
+            <p class="mt-4 text-center">Didn’t receive the code? <a href="#" class="text-blue-600 hover:underline">Resend Code</a></p>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('verificationForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const verificationCode = document.getElementById('verificationCode').value;
+
+    try {
+        const response = await fetch('http://localhost:8080/verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ verificationCode }),
+        });
+
+        // Check if the response is OK (status in the range 200-299)
+        const data = await response.json(); // Always expect JSON
+
+        if (response.ok) {
+            if (data.success) {
+                alert('Verification successful!');
+                // Redirect or perform other actions
+            } else {
+                document.getElementById('verificationErrorMessage').innerText = data.message || 'Verification failed.';
+            }
+        } else {
+            document.getElementById('verificationErrorMessage').innerText = data.message || 'An error occurred.';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('verificationErrorMessage').innerText = 'An error occurred. Please try again.';
+    }
+});
+
+    </script>
+</body>
+</html>
